@@ -18,7 +18,7 @@ import javafx.stage.Stage;
  *	Aqui se despiega una ventana con un titulo y un boton al medio de un layout que no hace nada.
  *
  */
-public class BotonSaludador extends Application implements EventHandler<ActionEvent>{
+public class BotonSaludador extends Application {
 
 	Button botonSaludo;
 	
@@ -33,7 +33,14 @@ public class BotonSaludador extends Application implements EventHandler<ActionEv
 		primaryStage.setTitle("Ventana Saludador");
 
 		botonSaludo = new Button("Saludador");
-		botonSaludo.setOnAction(this);
+		botonSaludo.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				System.out.println("el boton ha sido presionado!");
+			}
+			
+		});
 		
 		//Se crea el layout y se agrega el boton.
 		StackPane layout = new StackPane();
@@ -44,16 +51,6 @@ public class BotonSaludador extends Application implements EventHandler<ActionEv
 		primaryStage.setScene(esena);
 		primaryStage.show();
 		
-	}
-	
-	
-
-	@Override
-	public void handle(ActionEvent event) {
-		
-		if(event.getSource() == botonSaludo) {
-			System.out.println("se ha presionado el boto botonSaludo!!");
-		}
 	}
 	
 }
