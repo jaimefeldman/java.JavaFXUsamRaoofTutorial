@@ -1,6 +1,8 @@
 package ejemplo.boton;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
@@ -16,9 +18,14 @@ import javafx.stage.Stage;
  *	Aqui se despiega una ventana con un titulo y un boton al medio de un layout que no hace nada.
  *
  */
-public class BotonSaludador extends Application{
+public class BotonSaludador extends Application implements EventHandler<ActionEvent>{
 
 	Button botonSaludo;
+	
+	public static void main(String[] args) {
+		launch(args);
+	}	
+	
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -26,6 +33,7 @@ public class BotonSaludador extends Application{
 		primaryStage.setTitle("Ventana Saludador");
 
 		botonSaludo = new Button("Saludador");
+		botonSaludo.setOnAction(this);
 		
 		//Se crea el layout y se agrega el boton.
 		StackPane layout = new StackPane();
@@ -38,8 +46,14 @@ public class BotonSaludador extends Application{
 		
 	}
 	
-	public static void main(String[] args) {
-		launch(args);
+	
+
+	@Override
+	public void handle(ActionEvent event) {
+		
+		if(event.getSource() == botonSaludo) {
+			System.out.println("se ha presionado el boto botonSaludo!!");
+		}
 	}
 	
 }
