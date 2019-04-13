@@ -1,8 +1,6 @@
 package ejemplo.boton;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
@@ -33,14 +31,9 @@ public class BotonSaludador extends Application {
 		primaryStage.setTitle("Ventana Saludador");
 
 		botonSaludo = new Button("Saludador");
-		botonSaludo.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				System.out.println("el boton ha sido presionado!");
-			}
-			
-		});
+		botonSaludo.setOnAction( e -> 
+			System.out.println("has presionado el boton, usando una funcion tipo Lambda")
+		);
 		
 		//Se crea el layout y se agrega el boton.
 		StackPane layout = new StackPane();
