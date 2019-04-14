@@ -1,10 +1,21 @@
 package ejemplo.boton;
 
+import java.beans.EventHandler;
+import java.util.Optional;
+
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 
 
@@ -41,9 +52,49 @@ public class BotonSaludador extends Application {
 
 		Scene esena = new Scene(layout, 500, 200);
 		
+		//Detectando cuando se cierra la ventana.
+		primaryStage.setOnCloseRequest(new javafx.event.EventHandler<WindowEvent>() {
+			
+			@Override
+			public void handle(WindowEvent event) {
+				System.out.println("Ventana cerrada..");
+				System.exit(0);
+			}
+		});
+		
+		//Creando Aceleradores para detectar comninaciones de teclas.
+		//Ref: https://medium.com/@zoha131/handling-keyboard-shortcuts-in-javafx-2972ba950a48
+		KeyCombination kc = new KeyCodeCombination(KeyCode.W, KeyCombination.CONTROL_DOWN);
+		//Runnable run = () -> System.out.println("Accelerador key worked.");
+		Runnable run = new Runnable() {
+			
+			@Override
+			public void run() {
+				AlertaSalidaApp();
+			}
+		};
+		esena.getAccelerators().put(kc, run);
+		
 		primaryStage.setScene(esena);
 		primaryStage.show();
-		
 	}
+	
+	//Alerta salida de la app
+	private void AlertaSalidaApp() {
+		
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Cerrando la Aplicación");
+		alert.setHeaderText("Desea salir de la aplicación?");
+		alert.setContentText("No se guardaran los cambios.");
+		
+		Optional<ButtonType> result = alert.showAndWait();
+		if(result.get() == ButtonType.OK) {
+			Platform.exit();
+			System.exit(0);
+		}else {
+			System.out.println("Salida Cancelada.");
+		}
+	}
+	
 	
 }
