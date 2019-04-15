@@ -31,10 +31,6 @@ public class BotonSaludador extends Application {
 
 	Button botonSaludo;
 	
-	public static void main(String[] args) {
-		launch(args);
-	}	
-	
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
