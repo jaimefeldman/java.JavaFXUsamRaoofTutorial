@@ -35,7 +35,12 @@ public class BotonSaludador extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
+		//Cancela la salida automatica de la app, al cerrar la app con la cruz de la ventana.
+		Platform.setImplicitExit(false);
+		
 		primaryStage.setTitle("Ventana Saludador");
+		primaryStage.setMinHeight(200);
+		primaryStage.setMinWidth(300);
 
 		botonSaludo = new Button("Saludador");
 		botonSaludo.setOnAction( e -> 
@@ -45,7 +50,6 @@ public class BotonSaludador extends Application {
 		//Se crea el layout y se agrega el boton.
 		StackPane layout = new StackPane();
 		layout.getChildren().add(botonSaludo);
-
 		Scene esena = new Scene(layout, 500, 200);
 		
 		//Detectando cuando se cierra la ventana.
@@ -53,8 +57,10 @@ public class BotonSaludador extends Application {
 			
 			@Override
 			public void handle(WindowEvent event) {
-				System.out.println("Ventana cerrada..");
-				System.exit(0);
+				System.out.println("Intenando cerrar la ventana..");
+				//Impide la salida consumiendo el evento y enviando a la alerta de salida.
+				event.consume();
+				AlertaSalidaApp();
 			}
 		});
 		
