@@ -1,5 +1,6 @@
 package ejemplo.boton;
 
+import java.awt.Toolkit;
 import java.beans.EventHandler;
 import java.util.Optional;
 
@@ -14,7 +15,9 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
 
@@ -29,7 +32,7 @@ import javafx.stage.WindowEvent;
  */
 public class BotonSaludador extends Application {
 
-	Button botonSaludo;
+	Button botonSaludo, botonMensajes;
 	
 	
 	@Override
@@ -39,18 +42,44 @@ public class BotonSaludador extends Application {
 		Platform.setImplicitExit(false);
 		
 		primaryStage.setTitle("Ventana Saludador");
+		
+		//Se establecen minimos y maximos para la ventana.
 		primaryStage.setMinHeight(200);
 		primaryStage.setMinWidth(300);
+		//primaryStage.setMaxHeight(600);
+		//primaryStage.setMaxWidth(400);
+		
+		//Inicia en su maximo..
+		//primaryStage.setMaximized(true);
+		
+		//primaryStage.initStyle(StageStyle.UTILITY);
+		primaryStage.resizableProperty().setValue(Boolean.FALSE);
 
+
+		
 		botonSaludo = new Button("Saludador");
-		botonSaludo.setOnAction( e -> 
-			System.out.println("has presionado el boton, usando una funcion tipo Lambda")
-		);
+		botonSaludo.setOnAction( e -> {
+			System.out.println("llamando a la instancia de la ventana saludador.");
+			VentanaSaludador ventanaSaludador = VentanaSaludador.getInstance(primaryStage);
+			ventanaSaludador.requestFocus();
+			
+		});
+		
+		botonMensajes = new Button("Mensajes");
+		botonMensajes.setOnAction( e -> {
+			System.out.println("Boton mensajes presionado!");
+		});
+		
+		
+		botonSaludo.setDefaultButton(true);
+		//botonMensajes.setDefaultButton(true);
+		
+		//botonMensajes.defaultButtonProperty().bind(botonMensajes.focusedProperty());
 		
 		//Se crea el layout y se agrega el boton.
-		StackPane layout = new StackPane();
-		layout.getChildren().add(botonSaludo);
-		Scene esena = new Scene(layout, 500, 200);
+		VBox vboxLayout = new VBox(10);
+		vboxLayout.getChildren().addAll(botonSaludo, botonMensajes);
+		Scene esena = new Scene(vboxLayout, 500, 200);
 		
 		//Detectando cuando se cierra la ventana.
 		primaryStage.setOnCloseRequest(new javafx.event.EventHandler<WindowEvent>() {
@@ -85,7 +114,7 @@ public class BotonSaludador extends Application {
 	//Modificando la alerta para poner el foco en el boton desaeado.
 	private void AlertaSalidaApp() {
 		
-		Alert alert = new Alert(AlertType.CONFIRMATION);
+		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle("Cerrando la Aplicación");
 		alert.setHeaderText("Desea salir de la aplicación?");
 		alert.setContentText("No se guardaran los cambios.");
