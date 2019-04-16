@@ -76,6 +76,7 @@ public class BotonSaludador extends Application {
 	}
 	
 	//Alerta salida de la app
+	//Modificando la alerta para poner el foco en el boton desaeado.
 	private void AlertaSalidaApp() {
 		
 		Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -83,14 +84,28 @@ public class BotonSaludador extends Application {
 		alert.setHeaderText("Desea salir de la aplicación?");
 		alert.setContentText("No se guardaran los cambios.");
 		
+		alert.getButtonTypes().clear();
+		alert.getButtonTypes().addAll(ButtonType.YES, ButtonType.NO);
+		
+		Button yesButton = (Button) alert.getDialogPane().lookupButton(ButtonType.YES);
+		yesButton.setText("Si");
+		yesButton.setDefaultButton(false);
+		
+		Button noButton = (Button) alert.getDialogPane().lookupButton(ButtonType.NO);
+		noButton.setText("No");
+		noButton.setDefaultButton(true);
+		
 		Optional<ButtonType> result = alert.showAndWait();
-		if(result.get() == ButtonType.OK) {
+		if(result.get() == ButtonType.YES) {
 			Platform.exit();
 			System.exit(0);
 		}else {
 			System.out.println("Salida Cancelada.");
 		}
 	}
-	
+
+	//Metodo main.
+	public static void main(String[] args) {
+		launch(args); }
 	
 }
